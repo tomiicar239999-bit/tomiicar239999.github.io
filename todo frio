@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO FRÍO - Mantenimiento de Aire Acondicionado por Suscripción Mensual</title>
+    <style>
+        :root {
+            --primary: #007bff;
+            --primary-dark: #0056b3;
+            --text: #333333;
+            --light-bg: #f8f9fa;
+            --border: #e9ecef;
+            --success: #28a745;
+            --shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        body {
+            color: var(--text);
+            line-height: 1.6;
+            background-color: #ffffff;
+            scroll-behavior: smooth;
+        }
+
+        /* Navegación */
+        header {
+            position: sticky;
+            top: 0;
+            background: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%);
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: #111;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #666;
+            margin-bottom: 2.5rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 4rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #ffffff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: #f0f7ff;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            font-size: 0.95rem;
+            color: #666;
+        }
+
+        /* Banner Incluido General */
+        .included-banner {
+            background-color: var(--light-bg);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .included-banner h2 {
+            margin-bottom: 2rem;
+            font-size: 1.75rem;
+        }
+
+        .included-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            list-style: none;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .included-list li {
+            background: #ffffff;
+            padding: 0.8rem 1.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        /* Servicios Section */
+        .services {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            padding: 2.5rem 2rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: left;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .service-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .service-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Cómo funciona Section */
+        .how-it-works {
+            background-color: var(--light-bg);
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            max-width: 1100px;
+            margin: 3rem auto 0;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary);
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1.5rem;
+        }
+
+        .step-item h3 {
+            margin-bottom: 1rem;
+        }
+
+        .step-item p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* Planes Section */
+        .pricing {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0 3rem;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .discount-badge {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            align-items: stretch;
+        }
+
+        .price-card {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 3rem 2rem;
+            text-align: left;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+        }
+
+        .price-card.popular {
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(0,123,255,0.1);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary);
+            color: #ffffff;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .price-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .price-card p {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #111;
+            margin-bottom: 2rem;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: #666;
+            font-weight: normal;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 2.5rem;
+            flex-grow: 1;
+        }
+
+        .features-list li {
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+            color: #444;
+            display: flex;
+            align-items: center;
+Usa el código con precaución.
+gap: 0.5rem;
+}
+.price-note {
+margin-top: 3rem;
+font-size: 0.85rem;
+color: #888;
+}
+/* FAQ Section */
+.faq {
+background-color: var(--light-bg);
+padding: 5rem 2rem;
+}
+.faq-container {
+max-width: 800px;
+margin: 3rem auto 0;
+}
+.faq-item {
+background: #ffffff;
+padding: 1.5rem;
+border-radius: 6px;
+margin-bottom: 1rem;
+box-shadow: var(--shadow);
+}
+.faq-item h3 {
+font-size: 1.1rem;
+margin-bottom: 0.75rem;
+color: #111;
+}
+.faq-item p {
+color: #666;
+font-size: 0.95rem;
+}
+/* Contact Section */
+.contact {
+padding: 5rem 2rem;
+max-width: 600px;
+margin: 0 auto;
+}
+.contact h2, .contact p {
+text-align: center;
+}
+.contact p {
+color: #666;
+margin-bottom: 3rem;
+}
+.form-group {
+margin-bottom: 1.5rem;
+}
+.form-group label {
+display: block;
+margin-bottom: 0.5rem;
+font-weight: 500;
+}
+.form-control {
+width: 100%;
+padding: 0.75rem;
+font-size: 1rem;
+border: 1px solid #ccc;
+border-radius: 4px;
+background-color: #fff;
+}
+.form-control:focus {
+outline: none;
+border-color: var(--primary);
+box-shadow: 0 0 0 3px rgba(0,123,255,0.25);
+}
+textarea.form-control {
+resize: vertical;
+min-height: 100px;
+}
+/* Footer */
+footer {
+background-color: #111111;
+color: #ffffff;
+padding: 4rem 2rem 2rem;
+}
+.footer-grid {
+display: grid;
+grid-template-columns: 2fr repeat(2, 1fr);
+gap: 4rem;
+max-width: 1200px;
+margin: 0 auto 3rem;
+}
+.footer-brand p {
+color: #aaa;
+margin-top: 1rem;
+font-size: 0.95rem;
+max-width: 300px;
+}
+.footer-column h4 {
+font-size: 1.1rem;
+margin-bottom: 1.5rem;
+}
+.footer-column ul {
+list-style: none;
+}
+.footer-column li {
+margin-bottom: 0.75rem;
+}
+.footer-column a {
+color: #aaa;
+text-decoration: none;
+transition: color 0.3s;
+}
+.footer-column a:hover {
+color: #ffffff;
+}
+.footer-column p {
+color: #aaa;
+font-size: 0.95rem;
+}
+.footer-bottom {
+text-align: center;
+padding-top: 2rem;
+border-top: 1px solid #222;
+color: #666;
+font-size: 0.9rem;
+}
+/* Floating WhatsApp Button */
+.whatsapp-float {
+position: fixed;
+bottom: 20px;
+right: 20px;
+background-color: #25d366;
+color: white;
+padding: 0.75rem 1.5rem;
+border-radius: 30px;
+box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+text-decoration: none;
+font-weight: 600;
+display: flex;
+align-items: center;
+gap: 0.5rem;
+z-index: 1000;
+transition: transform 0.3s;
+}
+.whatsapp-float:hover {
+transform: scale(1.05);
+}
+/* Responsive Breakpoints */
+@media (max-width: 992px) {
+.services-grid, .pricing-grid, .steps-grid {
+grid-template-columns: 1fr;
+gap: 2rem;
+}
+.stats-grid {
+grid-template-columns: repeat(2, 1fr);
+gap: 1.5rem;
+}
+.footer-grid {
+grid-template-columns: 1fr;
+gap: 2.5rem;
+}
+}
+@media (max-width: 576px) {
+.hero h1 {
+font-size: 2rem;
+}
+.cta-buttons {
+flex-direction: column;
+}
+.stats-grid {
+grid-template-columns: 1fr;
+}
+nav ul {
+display: none;
+}
+}
+
+
+TODO FRÍO
+
+
+Servicios
+Cómo funciona
+Planes
+Preguntas
+Contacto
+
+
+
+Tu aire acondicionado siempre listo, sin sorpresas
+Mantenimiento preventivo mensual para tu hogar u oficina. Limpieza, revisión y técnicos certificados por una tarifa fija al mes. Ahorra energía, evita averías y alarga la vida de tu equipo.
+
+Ver planes
+Solicitar visita gratis
+
+
+
++1.200
+Clientes activos
+
+
+98%
+Clientes que renuevan
+
+
+30%
+Ahorro promedio en energía
+
+
+24h
+Tiempo de respuesta
+
+
+
+Incluido en todos los planes
+
+✓ Limpieza de filtros cada mes
+✓ Revisión de gas refrigerante y presiones
+✓ Desinfección de evaporador
+✓ Diagnóstico con informe digital
+✓ Atención prioritaria por WhatsApp
+
+Servicios incluidos
+Un plan de mantenimiento completo para que tu equipo funcione como el primer día.
+
+
+🧹
+Limpieza de filtros
+Filtros lavados y desinfectados para mejor calidad del aire y menor consumo.
+
+
+❄
+Limpieza de unidades
+Limpieza profunda de evaporador y condensador con productos biodegradables.
+
+
+🔧
+Revisión técnica
+Control de presiones, gas, conexiones eléctricas y funcionamiento del compresor.
+
+
+📊
+Informe mensual
+Recibe por correo un reporte del estado de tu equipo con fotos y recomendaciones.
+
+
+🛡
+Garantía de reparación
+Repuestos y mano de obra cubiertos según tu plan, sin costos ocultos.
+
+
+⚡
+Prioridad en averías
+Atención preferente y visitas de urgencia para suscriptores activos.
+
+
+¿Cómo funciona?
+Empezar toma menos de 5 minutos.
+
+
+1
+Elige tu plan
+Selecciona el plan que mejor se adapte a la cantidad de equipos de tu hogar o negocio.
+
+
+2
+Agenda tu visita
+Te contactamos para programar la primera visita en el día y horario que prefieras.
+
+
+3
+Olvídate del resto
+Cada mes realizamos el mantenimiento y te enviamos el informe. Pagas automáticamente.
+
+
+Planes de suscripción
+Sin permanencia. Cancela cuando quieras desde tu cuenta.
+
+Mensual
+Anual
+Ahorra 15%
+
+
+
+Básico
+Ideal para un departamento o una habitación.
+$29/mes
+
+✓ Hasta 1 equipo split
+✓ Mantenimiento mensual
+✓ Limpieza de filtros
+✓ Informe digital
+
+Elegir Básico
+
+
+Más popular
+Hogar
+Para casas con varios equipos de climatización.
+$59/mes
+
+✓ Hasta 3 equipos
+✓ Todo lo del plan Básico
+✓ Desinfección de evaporadores
+✓ Revisión de gas refrigerante
+✓ Prioridad en averías
+
+Elegir Hogar
+
+
+Empresa
+Para oficinas, locales y negocios.
+$129/mes
+
+✓ Equipos ilimitados
+✓ Todo lo del plan Hogar
+✓ Visitas de urgencia 24/7
+✓ Técnico asignado
+✓ Factura para deducción fiscal
+
+Elegir Empresa
+
+
+Precios en USD + impuestos. Los equipos y repuestos adicionales se cotizan aparte.
+Preguntas frecuentes
+Resolvemos tus dudas antes de empezar.
+
+¿Puedo cancelar la suscripción en cualquier momento?
+Sí. No hay permanencia. Puedes cancelar desde tu cuenta en cualquier momento y el cobro se detiene en el siguiente ciclo.
+
+
+¿Qué pasa si mi equipo necesita una reparación?
+Los suscriptores tienen prioridad en la agenda. Las piezas y la mano de obra están cubiertas según el plan contratado; el resto se cotiza antes de realizar cualquier trabajo.
+
+
+¿Con qué frecuencia vienen los técnicos?
+Una visita mensual de mantenimiento preventivo. Las visitas de urgencia se incluyen según tu plan.
+
+
+¿Trabajan con todas las marcas?
+Sí, trabajamos con equipos split, multisplit, de ventana y de conductos de las principales marcas.
+
+
+¿Cómo se realiza el pago?
+Cobro automático con tarjeta cada mes. Recibes la factura por correo electrónico.
+
+
+Empieza tu suscripción hoy
+Déjanos tus datos y te contactamos en menos de 24 horas para agendar tu primera visita.
+
+Nombre completo
+Teléfono / WhatsApp
+Correo electrónico
+Plan de interés
+Básico
+Hogar
+Empresa
+
+
+Número de equipos
+Comentarios (opcional)
+Solicitar visita gratis
+
+TODO FRÍO
+Mantenimiento de aire acondicionado por suscripción mensual. Calidad, puntualidad y transparencia.
+
+
+Navegación
+
+Servicios
+Planes
+Preguntas
+
+
+
+Contacto
+📞 +54 9 376 435-1916
+✉️ hola@brisaconfort.com
+🕒 Lun–Sáb, 8:00–18:00
+
+
+
+© 2026 TODO FRÍO. Todos los derechos reservados.
+
+💬 WhatsApp
+const toggle = document.getElementById('billing-toggle');
+const priceBasico = document.getElementById('price-basico');
+const priceHogar = document.getElementById('price-hogar');
+const priceEmpresa = document.getElementById('price-empresa');
+toggle.addEventListener('change', function() {
+if (this.checked) {
+priceBasico.innerHTML = '$' + priceBasico.dataset.annual + '/mes (anual)';
+priceHogar.innerHTML = '$' + priceHogar.dataset.annual + '/mes (anual)';
+priceEmpresa.innerHTML = '$' + priceEmpresa.dataset.annual + '/mes (anual)';
+} else {
+priceBasico.innerHTML = '$' + priceBasico.dataset.monthly + '/mes';
+priceHogar.innerHTML = '$' + priceHogar.dataset.monthly + '/mes';
+priceEmpresa.innerHTML = '$' + priceEmpresa.dataset.monthly + '/mes';
+}
+});
+
